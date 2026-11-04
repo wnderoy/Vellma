@@ -34,7 +34,7 @@ class MethodContract:
 
 
 class DafnyContractParser:
-    """Parses .dfy files to extract contracts verbatim."""
+    #Parses .dfy files to extract contracts
 
     CLAUSE_KEYWORDS = ("requires", "ensures", "modifies", "reads", "decreases")
 
@@ -204,14 +204,14 @@ class ScaffoldEmitter:
 def main():
     target_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("input.dfy")
 
-    # 1. Parse
+    # Parse
     parser = DafnyContractParser()
     contract = parser.parse_file(target_path)
 
-    # 2. Derive logic mechanically
+    # Derive logic mechanically
     derived_body = TemplateDeriver.derive_baseline(contract)
 
-    # 3. Emit
+    # Emit
     final_code = ScaffoldEmitter.emit(contract, derived_body)
 
     output_path = target_path.with_suffix(".scaffolded.dfy")
