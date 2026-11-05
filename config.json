@@ -1,0 +1,29 @@
+{
+  "workspace": {
+    "input_file": "examples/prototype_task.dfy",
+    "output_dir": "results/prototype_run",
+    "parser_script": "etl_engine.py",
+    "dafny_bin": "dafny"
+  },
+  "pipeline_toggles": {
+    "run_mechanical_parser": true,
+    "enforce_contract_preservation": true
+  },
+  "llm": {
+    "provider": "local_inference",
+    "base_url": "http://localhost:1234/v1",
+    "api_key": "local-prototype",
+    "model_name": "qwen2.5-coder-7b-instruct",
+    "temperature": 0.2,
+    "max_tokens": 1024,
+    "timeout_seconds": 120
+  },
+  "strategy": {
+    "name": "simple_repair_loop",
+    "max_iterations": 3
+  },
+  "prompts": {
+    "completion_system": "You are a Dafny formal verification assistant. Complete the implementation for the provided scaffold. Do not alter the requires/ensures contracts. Output ONLY valid Dafny code.",
+    "repair_system": "The previous Dafny code failed verification. Fix the errors shown in the trace by adding invariants or fixing logic. Do not alter the requires/ensures contracts. Output ONLY valid Dafny code."
+  }
+}
